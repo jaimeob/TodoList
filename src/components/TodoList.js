@@ -18,7 +18,7 @@ export class TodoList extends React.Component {
             mensajeBorrados: false,
             mensajesSeleccionados: false,
             campoVacio: false,
-            confirmEstatus:false        
+            confirmEstatus: false
         };
 
     }
@@ -98,27 +98,27 @@ export class TodoList extends React.Component {
         console.log(tarea, "tarea");
     }
 
-    cambiarEstatusTarea = (tarea) => {this.setState({ confirmEstatus: true, tareaSeleccionada : tarea })}
+    cambiarEstatusTarea = (tarea) => { this.setState({ confirmEstatus: true, tareaSeleccionada: tarea }) }
 
     aceptarEstatus = () => {
-        let param = { estatus: false}
-            
+        let param = { estatus: false }
+
         axios.put(`http://localhost:3000/tarea/${this.state.tareaSeleccionada._id}`, param).then((response) => {
             console.log(response, "Editado");
             this.obtenerTareas()
         })
 
-        this.setState({ confirmEstatus: false, tareaSeleccionada : {} })
+        this.setState({ confirmEstatus: false, tareaSeleccionada: {} })
     }
 
     show = () => {
-        
+
         if (this.state.arrayChekeados.length > 0) {
             this.setState({ open: true })
-        }else{
+        } else {
             this.setState({ mensajesSeleccionados: true })
         }
-        
+
     }
 
     handleConfirm = () => {
@@ -159,7 +159,7 @@ export class TodoList extends React.Component {
     handleCancel = () => this.setState({ open: false })
 
     handleDismiss = () => {
-        this.setState({ mensajesSeleccionados: false, confirmEstatus:false})
+        this.setState({ mensajesSeleccionados: false, confirmEstatus: false })
 
     }
 
@@ -208,7 +208,6 @@ export class TodoList extends React.Component {
                 <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 800 }}>
                         <Header as='h2' color='teal' textAlign='center'>
-                            {/* <Image src='/logo.png' />  */}
                             To do list - prueba
                     </Header>
                         <Form size='small'>
@@ -216,7 +215,6 @@ export class TodoList extends React.Component {
                                 <Form.Input fluid icon='tasks' iconPosition='left' placeholder='Escribir tarea' value={this.state.nombreTarea} onChange={this.onChangeTextSearch} />
                                 <Button color='teal' fluid size='large' onClick={this.agregarTarea} >
                                     Agregar tarea
-                        {/* onClick={() => agregarTarea()} */}
                                 </Button>
                             </Segment>
                         </Form>
@@ -227,54 +225,54 @@ export class TodoList extends React.Component {
                                     <Segment stacked>
                                         <Button color='red' fluid size='large' onClick={this.show} >
                                             Borrar tarea seleccionada
-                    {/* onClick={() => agregarTarea()} */}
                                         </Button>
                                     </Segment>
                                 </Form>
 
                             </Grid.Column>
                         </Grid>
+                        {this.state.tareas ?
+                            <Table compact celled definition>
+                                <Table.Body>
 
-                        <Table compact celled definition>
-                            <Table.Body>
-                                {this.state.tareas.map((tarea, key) => {
-                                    return (
-                                        <Table.Row key={key}>
-                                            <Table.Cell>{tarea.nombre}</Table.Cell>
-                                            <Table.Cell textAlign='right'>
-                                                <div class="ui grid " >
-                                                    <div class="doubling eight column row">
-                                                        <div class="column eight wide " ></div>
-                                                        <div class="column ">
-                                                            {tarea.estatus ?
-                                                                <button class="ui icon button small red" onClick={() => this.borrarTarea(tarea)}>
-                                                                    <i class="trash icon"></i>
-                                                                </button> : null}
-                                                        </div>
-                                                        <div class="column ">
-                                                            {tarea.estatus ?
-                                                                <button class="ui icon button small yellow" onClick={() => this.editarTarea(tarea)}>
-                                                                    <i class="edit icon"></i>
-                                                                </button>
-                                                                : null}
-                                                        </div>
-                                                        <div class="column "><button class="ui icon button small green" on onClick={() => this.cambiarEstatusTarea(tarea)} >
-                                                            <i class="check icon"></i>
-                                                        </button>
-                                                        </div>
-                                                        <div class="column  " >
-                                                            <Checkbox className="checkboxPerron" onChange={this.tareaCheck(tarea, key)} />
-                                                        </div>
+                                    {this.state.tareas.map((tarea, key) => {
+                                        return (
+                                            <Table.Row key={key}>
+                                                <Table.Cell>{tarea.nombre}</Table.Cell>
+                                                <Table.Cell textAlign='right'>
+                                                    <div class="ui grid " >
+                                                        <div class="doubling eight column row">
+                                                            <div class="column eight wide " ></div>
+                                                            <div class="column ">
+                                                                {tarea.estatus ?
+                                                                    <button class="ui icon button small red" onClick={() => this.borrarTarea(tarea)}>
+                                                                        <i class="trash icon"></i>
+                                                                    </button> : null}
+                                                            </div>
+                                                            <div class="column ">
+                                                                {tarea.estatus ?
+                                                                    <button class="ui icon button small yellow" onClick={() => this.editarTarea(tarea)}>
+                                                                        <i class="edit icon"></i>
+                                                                    </button>
+                                                                    : null}
+                                                            </div>
+                                                            <div class="column "><button class="ui icon button small green" on onClick={() => this.cambiarEstatusTarea(tarea)} >
+                                                                <i class="check icon"></i>
+                                                            </button>
+                                                            </div>
+                                                            <div class="column  " >
+                                                                <Checkbox className="checkboxPerron" onChange={this.tareaCheck(tarea, key)} />
+                                                            </div>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </Table.Cell>
-                                        </Table.Row>
+                                                </Table.Cell>
+                                            </Table.Row>
 
-                                    );
-                                })}
-                            </Table.Body>
-                        </Table>
+                                        );
+                                    })}
+                                </Table.Body>
+                            </Table> : null}
                     </Grid.Column>
                 </Grid>
 
@@ -305,14 +303,13 @@ export class TodoList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state, "state---------------");
     return {
         tareas: state
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-  
+
 
 })
 
